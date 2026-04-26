@@ -358,19 +358,8 @@ $eyeTimer.Start()
 
 $window.Add_Closed({ $waterTimer.Stop(); $stretchTimer.Stop(); $eyeTimer.Stop() })
 
-# ── Force true transparency ──────────────────────────────
-# Add-Type -AssemblyName System.Windows.Shell
-# $chrome = [System.Windows.Shell.WindowChrome]::new()
-# $chrome.ResizeBorderThickness = [System.Windows.Thickness]::new(0)
-# $chrome.CaptionHeight         = 0
-# $chrome.CornerRadius          = [System.Windows.CornerRadius]::new(0)
-# $chrome.GlassFrameThickness   = [System.Windows.Thickness]::new(-1)
-# [System.Windows.Shell.WindowChrome]::SetWindowChrome($window, $chrome)
-# $window.Background            = [System.Windows.Media.Brushes]::Transparent
-# ────────────────────────────────────────────────────────
 $window.WindowStyle        = [System.Windows.WindowStyle]::None
 $window.AllowsTransparency = $true
-# $window.Background         = [System.Windows.Media.Brushes]::Transparent
 $window.Background = [System.Windows.Media.Brushes]::Transparent
 $okButton = $window.FindName("OkButton")
 $okButton.Add_Click({ $window.Close() })
