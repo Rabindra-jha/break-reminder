@@ -43,3 +43,10 @@ Click **"I'm taking a break ✓"** (or press Enter / Escape) when you're ready t
 - Works on **Windows 10 and Windows 11**
 - No installation, no admin rights required
 - To make it start automatically with Windows, place a shortcut to `BreakReminder.exe` in your Startup folder (`Win + R` → type `shell:startup` → paste shortcut there)
+
+## Known Issues
+| Issue | Status |
+|---|---|
+| Windows flags .exe with a security warning on first run | **Expected** — the app is not code signed. Click More info → Run anyway to proceed. Completely safe to do so. |
+| Animation not working on some systems | **Fixed** — pull the latest code from this repo |
+
