@@ -92,7 +92,7 @@ Add-Type -AssemblyName WindowsBase
     ResizeMode="NoResize"
     WindowStyle="None"
     AllowsTransparency="True"
-    Background="Transparent">
+    Background="#00000000">
 
   <Window.Resources>
     <!-- OK Button hover style -->
@@ -148,10 +148,6 @@ Add-Type -AssemblyName WindowsBase
         <GradientStop Color="#0A1628" Offset="1"/>
       </LinearGradientBrush>
     </Border.Background>
-    <Border.Effect>
-      <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="0" Opacity="0.8"/>
-    </Border.Effect>
-
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="*"/>
@@ -188,7 +184,7 @@ Add-Type -AssemblyName WindowsBase
           </Border.Effect>
           <TextBlock Text="&#x23F0;" FontSize="48"
                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                     Margin="0,18,0,0"/>
+                     Margin="0,8,0,0"/>
         </Border>
 
         <!-- Title -->
@@ -377,9 +373,6 @@ $eyeTimer.Start()
 $window.Add_Closed({ $waterTimer.Stop(); $stretchTimer.Stop(); $eyeTimer.Stop() })
 
 
-$window.WindowStyle        = [System.Windows.WindowStyle]::None
-$window.AllowsTransparency = $true
-$window.Background = [System.Windows.Media.Brushes]::Transparent
 $okButton = $window.FindName("OkButton")
 $okButton.Add_Click({ $window.Close() })
 
