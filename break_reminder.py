@@ -2,12 +2,13 @@
 Break Reminder - Desktop Background App
 ======================================
 Runs silently in system tray, pops a beautiful WPF alert every 20 minutes.
-Build to .exe:  python -m PyInstaller --onefile --windowed --name "BreakReminder" break_reminder.py
+Build to .exe:  python -m PyInstaller --onefile --windowed --name "BreakReminder" --add-data "water.gif;." --add-data "eye.gif;." --add-data "stretching.gif;." break_reminder.py
 
 Requirements:
     pip install pystray pillow
 """
 
+import os
 import threading
 import subprocess
 import pystray
@@ -29,6 +30,15 @@ ALERT_MESSAGE    = (
     "💧  Drink some water\n\n"
     "Click OK when you're ready to continue."
 )
+
+
+# ─────────────────────────────────────────────
+#  RESOURCE PATH  (PyInstaller + dev compatible)
+# ─────────────────────────────────────────────
+def resource_path(filename: str) -> str:
+    """Resolve path to a bundled file — works in dev and inside a PyInstaller .exe."""
+    base = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, filename)
 
 
 # ─────────────────────────────────────────────
@@ -57,7 +67,15 @@ def show_alert():
     1100x1100, dark theme, large fonts, animated gradient background.
     Completely isolated process — no tkinter/thread conflicts.
     """
-    ps_script = r"""
+    water_path   = resource_path("water.gif")
+    stretch_path = resource_path("stretching.gif")
+    eye_path     = resource_path("eye.gif")
+
+    ps_script = (
+        f'$waterPath   = "{water_path}"\n'
+        f'$stretchPath = "{stretch_path}"\n'
+        f'$eyePath     = "{eye_path}"\n'
+    ) + r"""
 Add-Type -AssemblyName PresentationFramework
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
@@ -312,7 +330,7 @@ $loadGif = {
 }
 
 # ── Water (Hydrate) ──────────────────────────────────────────
-$script:waterFrames = & $loadGif "C:\Users\rabin\Desktop\files\water.gif"
+$script:waterFrames = & $loadGif $waterPath
 $script:waterIndex  = 10
 $waterImage         = $window.FindName("WaterGif")
 $waterImage.Source  = $script:waterFrames[10]
@@ -327,7 +345,7 @@ $waterTimer.Add_Tick({
 $waterTimer.Start()
 
 # ── Stretch ──────────────────────────────────────────────────
-$script:stretchFrames = & $loadGif "C:\Users\rabin\Desktop\files\stretching.gif"
+$script:stretchFrames = & $loadGif $stretchPath
 $script:stretchIndex  = 5
 $stretchImage         = $window.FindName("StretchGif")
 $stretchImage.Source  = $script:stretchFrames[5]
@@ -342,7 +360,7 @@ $stretchTimer.Add_Tick({
 $stretchTimer.Start()
 
 # ── Eye (20-20-20) ───────────────────────────────────────────
-$script:eyeFrames = & $loadGif "C:\Users\rabin\Desktop\files\eye.gif"
+$script:eyeFrames = & $loadGif $eyePath
 $script:eyeIndex  = 5
 $eyeImage         = $window.FindName("EyeGif")
 $eyeImage.Source  = $script:eyeFrames[5]
@@ -357,6 +375,7 @@ $eyeTimer.Add_Tick({
 $eyeTimer.Start()
 
 $window.Add_Closed({ $waterTimer.Stop(); $stretchTimer.Stop(); $eyeTimer.Stop() })
+
 
 $window.WindowStyle        = [System.Windows.WindowStyle]::None
 $window.AllowsTransparency = $true
