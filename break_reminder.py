@@ -64,7 +64,7 @@ def create_tray_icon() -> Image.Image:
 def show_alert():
     """
     Spawns a fully custom WPF window via PowerShell.
-    1100x1100, dark theme, large fonts, animated gradient background.
+    1160x870, dark theme, large fonts, animated gradient background.
     Completely isolated process — no tkinter/thread conflicts.
     """
     water_path   = resource_path("water.gif")
@@ -85,8 +85,8 @@ Add-Type -AssemblyName WindowsBase
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Break Reminder"
-    Width="1100" Height="1100"
-    MinWidth="1100" MinHeight="1100"
+    Width="1160" Height="870"
+    MinWidth="1160" MinHeight="870"
     WindowStartupLocation="CenterScreen"
     Topmost="True"
     ResizeMode="NoResize"
@@ -99,11 +99,11 @@ Add-Type -AssemblyName WindowsBase
     <Style x:Key="OkButtonStyle" TargetType="Button">
       <Setter Property="Background" Value="#27AE60"/>
       <Setter Property="Foreground" Value="White"/>
-      <Setter Property="FontSize" Value="28"/>
+      <Setter Property="FontSize" Value="24"/>
       <Setter Property="FontWeight" Value="Bold"/>
       <Setter Property="FontFamily" Value="Segoe UI"/>
-      <Setter Property="Width" Value="320"/>
-      <Setter Property="Height" Value="80"/>
+      <Setter Property="Width" Value="334"/>
+      <Setter Property="Height" Value="68"/>
       <Setter Property="Cursor" Value="Hand"/>
       <Setter Property="BorderThickness" Value="0"/>
       <Setter Property="Template">
@@ -111,7 +111,7 @@ Add-Type -AssemblyName WindowsBase
           <ControlTemplate TargetType="Button">
             <Grid>
               <!-- Glow ring: slightly larger than button so blur radiates outward only -->
-              <Border x:Name="glow" CornerRadius="44" BorderThickness="0"
+              <Border x:Name="glow" CornerRadius="38" BorderThickness="0"
                       Background="#2ECC71" Margin="-6" Opacity="0">
                 <Border.Effect>
                   <DropShadowEffect Color="#2ECC71" BlurRadius="20" ShadowDepth="0" Opacity="0.9"/>
@@ -119,7 +119,7 @@ Add-Type -AssemblyName WindowsBase
               </Border>
               <!-- Solid background — no effect, covers glow interior entirely -->
               <Border x:Name="border" Background="{TemplateBinding Background}"
-                      CornerRadius="40" BorderThickness="0"/>
+                      CornerRadius="34" BorderThickness="0"/>
               <!-- Text always on top, never inside an effected element -->
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
@@ -140,7 +140,7 @@ Add-Type -AssemblyName WindowsBase
   </Window.Resources>
 
   <!-- Outer rounded card -->
-  <Border CornerRadius="32" Margin="60">
+  <Border CornerRadius="32" Margin="46" ClipToBounds="True">
     <Border.Background>
       <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
         <GradientStop Color="#0D1B2A" Offset="0"/>
@@ -152,16 +152,16 @@ Add-Type -AssemblyName WindowsBase
       <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="0" Opacity="0.8"/>
     </Border.Effect>
 
-    <Grid ClipToBounds="True">
+    <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="*"/>
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
 
       <!-- Decorative top glow circle -->
-      <Ellipse Width="600" Height="600"
+      <Ellipse Width="470" Height="470"
                HorizontalAlignment="Center" VerticalAlignment="Top"
-               Margin="0,-250,0,0" Opacity="0.07">
+               Margin="0,-196,0,0" Opacity="0.07">
         <Ellipse.Fill>
           <RadialGradientBrush>
             <GradientStop Color="#27AE60" Offset="0"/>
@@ -172,11 +172,11 @@ Add-Type -AssemblyName WindowsBase
 
       <!-- Main content -->
       <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"
-                  Margin="80,60,80,40">
+                  Margin="60,28,60,20">
 
         <!-- Big eye / break icon -->
-        <Border Width="160" Height="160" CornerRadius="80" HorizontalAlignment="Center"
-                Margin="0,0,0,48">
+        <Border Width="136" Height="136" CornerRadius="68" HorizontalAlignment="Center"
+                Margin="0,0,0,28">
           <Border.Background>
             <RadialGradientBrush>
               <GradientStop Color="#27AE60" Offset="0"/>
@@ -186,14 +186,14 @@ Add-Type -AssemblyName WindowsBase
           <Border.Effect>
             <DropShadowEffect Color="#27AE60" BlurRadius="50" ShadowDepth="0" Opacity="0.6"/>
           </Border.Effect>
-          <TextBlock Text="&#x23F0;" FontSize="80"
+          <TextBlock Text="&#x23F0;" FontSize="48"
                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                     Margin="0,8,0,0"/>
+                     Margin="0,18,0,0"/>
         </Border>
 
         <!-- Title -->
         <TextBlock Text="Time for a Break!"
-                   FontSize="64" FontWeight="Black"
+                   FontSize="55" FontWeight="Black"
                    FontFamily="Segoe UI"
                    Foreground="White"
                    HorizontalAlignment="Center"
@@ -206,19 +206,19 @@ Add-Type -AssemblyName WindowsBase
 
         <!-- Subtitle -->
         <TextBlock Text="You've been working for 20 minutes"
-                   FontSize="28" FontWeight="Normal"
+                   FontSize="24" FontWeight="Normal"
                    FontFamily="Segoe UI"
                    Foreground="#8899AA"
                    HorizontalAlignment="Center"
                    TextAlignment="Center"
-                   Margin="0,0,0,64"/>
+                   Margin="0,0,0,48"/>
 
         <!-- Tip cards row -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                    Margin="0,0,0,64">
+                    Margin="0,0,0,48">
 
           <!-- Card 1 -->
-          <Border Width="220" Height="200" CornerRadius="24" Margin="16,0">
+          <Border Width="226" Height="174" CornerRadius="20" Margin="16,0">
             <Border.Background>
               <SolidColorBrush Color="#1A2A3A"/>
             </Border.Background>
@@ -227,20 +227,20 @@ Add-Type -AssemblyName WindowsBase
             </Border.BorderBrush>
             <Border.BorderThickness>1.5</Border.BorderThickness>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-              <Image x:Name="EyeGif" Width="72" Height="72"
-                     HorizontalAlignment="Center" Margin="0,0,0,16"
+              <Image x:Name="EyeGif" Width="62" Height="62"
+                     HorizontalAlignment="Center" Margin="0,0,0,14"
                      RenderOptions.BitmapScalingMode="HighQuality"/>
-              <TextBlock Text="20-20-20 Rule" FontSize="22" FontWeight="SemiBold"
+              <TextBlock Text="20-20-20 Rule" FontSize="20" FontWeight="SemiBold"
                          Foreground="White" HorizontalAlignment="Center"
                          TextAlignment="Center"/>
-              <TextBlock Text="Look 20ft away&#x0a;for 20 seconds" FontSize="18"
+              <TextBlock Text="Look 20ft away&#x0a;for 20 seconds" FontSize="20"
                          Foreground="#8899AA" HorizontalAlignment="Center"
-                         TextAlignment="Center" Margin="0,8,0,0"/>
+                         TextAlignment="Center" Margin="0,6,0,0"/>
             </StackPanel>
           </Border>
 
           <!-- Card 2 -->
-          <Border Width="220" Height="200" CornerRadius="24" Margin="16,0">
+          <Border Width="226" Height="174" CornerRadius="20" Margin="16,0">
             <Border.Background>
               <SolidColorBrush Color="#1A2A3A"/>
             </Border.Background>
@@ -249,19 +249,19 @@ Add-Type -AssemblyName WindowsBase
             </Border.BorderBrush>
             <Border.BorderThickness>1.5</Border.BorderThickness>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-              <Image x:Name="StretchGif" Width="72" Height="72"
-                     HorizontalAlignment="Center" Margin="0,0,0,16"
+              <Image x:Name="StretchGif" Width="62" Height="62"
+                     HorizontalAlignment="Center" Margin="0,0,0,14"
                      RenderOptions.BitmapScalingMode="HighQuality"/>
-              <TextBlock Text="Stretch" FontSize="22" FontWeight="SemiBold"
+              <TextBlock Text="Stretch" FontSize="20" FontWeight="SemiBold"
                          Foreground="White" HorizontalAlignment="Center"/>
-              <TextBlock Text="Stand up and&#x0a;move around" FontSize="18"
+              <TextBlock Text="Stand up and&#x0a;move around" FontSize="20"
                          Foreground="#8899AA" HorizontalAlignment="Center"
-                         TextAlignment="Center" Margin="0,8,0,0"/>
+                         TextAlignment="Center" Margin="0,6,0,0"/>
             </StackPanel>
           </Border>
 
           <!-- Card 3 -->
-          <Border Width="220" Height="200" CornerRadius="24" Margin="16,0">
+          <Border Width="226" Height="174" CornerRadius="20" Margin="16,0">
             <Border.Background>
               <SolidColorBrush Color="#1A2A3A"/>
             </Border.Background>
@@ -270,14 +270,14 @@ Add-Type -AssemblyName WindowsBase
             </Border.BorderBrush>
             <Border.BorderThickness>1.5</Border.BorderThickness>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-              <Image x:Name="WaterGif" Width="72" Height="72"
-                     HorizontalAlignment="Center" Margin="0,0,0,16"
+              <Image x:Name="WaterGif" Width="62" Height="62"
+                     HorizontalAlignment="Center" Margin="0,0,0,14"
                      RenderOptions.BitmapScalingMode="HighQuality"/>
-              <TextBlock Text="Hydrate" FontSize="22" FontWeight="SemiBold"
+              <TextBlock Text="Hydrate" FontSize="20" FontWeight="SemiBold"
                          Foreground="White" HorizontalAlignment="Center"/>
-              <TextBlock Text="Drink a glass&#x0a;of water" FontSize="18"
+              <TextBlock Text="Drink a glass&#x0a;of water" FontSize="20"
                          Foreground="#8899AA" HorizontalAlignment="Center"
-                         TextAlignment="Center" Margin="0,8,0,0"/>
+                         TextAlignment="Center" Margin="0,6,0,0"/>
             </StackPanel>
           </Border>
 
@@ -286,12 +286,12 @@ Add-Type -AssemblyName WindowsBase
       </StackPanel>
 
       <!-- OK Button -->
-      <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,72">
+      <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,56">
         <Button x:Name="OkButton" Content="I'm taking a break  ✓"
                 Style="{StaticResource OkButtonStyle}"/>
         <TextBlock Text="Next reminder in 20 minutes"
-                   FontSize="20" Foreground="#55667A"
-                   HorizontalAlignment="Center" Margin="0,20,0,0"
+                   FontSize="18" Foreground="#55667A"
+                   HorizontalAlignment="Center" Margin="0,16,0,0"
                    FontFamily="Segoe UI"/>
       </StackPanel>
 
